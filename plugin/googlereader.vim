@@ -1,8 +1,8 @@
 "=============================================================================
 " File: googlereader.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 20-Jun-2009.
-" Version: 1.9
+" Last Change: 21-Jun-2009.
+" Version: 2.0
 " WebPage: http://github.com/mattn/googlereader-vim/tree/master
 " Usage:
 "
@@ -10,7 +10,7 @@
 "
 " GetLatestVimScripts: 2678 1 :AutoInstall: googlereader.vim
 
-let g:googlereader_vim_version = "1.9"
+let g:googlereader_vim_version = "2.0"
 if &compatible
   finish
 endif
@@ -184,14 +184,14 @@ function! s:WebAccess(url, getdata, postdata, cookie, returnheader)
   let command .= " \"" . url . "\""
   if strlen(postdata)
     let file = tempname()
-    exec 'redir! > '.file 
+    exec 'redir! > '.file
     silent echo postdata
     redir END
     let quote = &shellxquote == '"' ?  "'" : '"'
     let res = system(command . " -d @" . quote.file.quote)
     call delete(file)
   else
-    let res = system(command . " \"" . url . "\"")
+    let res = system(command)
   endif
   return res
 endfunction
