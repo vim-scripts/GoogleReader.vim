@@ -1,14 +1,15 @@
 "=============================================================================
 " File: googlereader.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 21-Jun-2009.
-" Version: 2.0
+" Last Change: 04-Feb-2010.
+" Version: 2.1
 " WebPage: http://github.com/mattn/googlereader-vim/tree/master
 " Usage:
 "
 "   :GoogleReader
 "
 " GetLatestVimScripts: 2678 1 :AutoInstall: googlereader.vim
+" Script type: plugin
 
 let g:googlereader_vim_version = "2.0"
 if &compatible
@@ -71,11 +72,11 @@ function! s:truncate(str, num)
       break
     endif
     let cells = s:wcwidth(ucs)
-	if width + cells > a:num
-	  break
+    if width + cells > a:num
+      break
     endif
     let width = width + cells
-	let ret .= char
+    let ret .= char
     let str = substitute(str, mx_first, '\2', '')
   endwhile
   while width + 1 <= a:num
@@ -279,7 +280,7 @@ function! s:GetEntries(email, passwd, opt)
   if s:sid == '' || s:sid =~ '^Error=BadAuthentication'
     echoerr "GoogleReader: bad authentication"
     let s:sid = ''
-	return []
+    return []
   endif
 
   if !has_key(a:opt, "n")
@@ -328,7 +329,7 @@ function! s:ShowEntry()
       execute winnr.'wincmd w'
     endif
   endif
-  setlocal buftype=nofile bufhidden=hide noswapfile wrap ft= nonumber modifiable
+  setlocal buftype=nofile bufhidden=hide noswapfile wrap ft= nonumber modifiable nolist
   silent! %d _
   redraw!
 
@@ -377,7 +378,7 @@ function! s:ShowEntryInBrowser()
   elseif has('mac')
     silent! exec "!open '".escape(b:url ,'#')."'"
   else
-    call system("firefox '".b:url."' 2>&1 > /dev/null &")
+    call system("x-www-browser '".b:url."' 2>&1 > /dev/null &")
   endif
   redraw!
 endfunction
